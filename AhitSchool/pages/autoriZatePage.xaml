@@ -1,0 +1,21 @@
+﻿<Page x:Class="AhitSchool.pages.autoriZatePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:AhitSchool.pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="autoriZatePage">
+
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock>Введите пароль</TextBlock>
+            <PasswordBox x:Name="PswrdPb" Width="120" Height="20" Margin="0,0,0,3"></PasswordBox>
+            <Button x:Name="StudentBtn" Background="Aquamarine" Click="StudentBtn_Click">Войти как гость</Button>
+            <Button x:Name="SotrudBtn" Background="Aquamarine" Click="SotrudBtn_Click">Войти как сотрудник</Button>
+            <Button Background="Aquamarine" x:Name="QRBtn" Content="Создать QR" Click="QRBtn_Click"/>
+            <Image  x:Name="QRImg" Height="100" Width="100"/>
+        </StackPanel>
+    </Grid>
+</Page>

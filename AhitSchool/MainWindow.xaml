@@ -7,17 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <StackPanel  Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBox Width="100" Margin="0,0,0,3"></TextBox>
-            <Button Background="Aquamarine">Войти как студент</Button>
-        </StackPanel>
-        <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBox Width="120" Margin="0,0,0,3"></TextBox>
-            <Button Background="Aqua">Войти как сотрудник</Button>
-        </StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Frame x:Name="MyFrame" Grid.Row="0"/>
     </Grid>
 </Window>

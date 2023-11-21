@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AhitSchool.components;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +14,7 @@ namespace AhitSchool
     /// </summary>
     public partial class App : Application
     {
+        public static uchebEntities Entities = new uchebEntities();
+        public static bool isAhit = false;
     }
 }
