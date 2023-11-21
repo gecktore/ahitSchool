@@ -96,6 +96,8 @@
           <Property Name="School" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Scores" Type="float" />
         </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "ucheb.dbo.Lecturer" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
         <EntityType Name="Lecturer">
           <Key>
             <PropertyRef Name="TabNumber" />
@@ -176,11 +178,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Exam_Lecturer">
-          <End Role="Lecturer" Type="Self.Lecturer" Multiplicity="0..1" />
+        <Association Name="FK_Exam_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
           <End Role="Exam" Type="Self.Exam" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Lecturer">
+            <Principal Role="Employee">
               <PropertyRef Name="TabNumber" />
             </Principal>
             <Dependent Role="Exam">
@@ -331,11 +333,17 @@
           <EntitySet Name="Exam" EntityType="Self.Exam" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Flowers_gareev" EntityType="Self.Flowers_gareev" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="learner" EntityType="Self.learner" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Lecturer" EntityType="Self.Lecturer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="spec" EntityType="Self.spec" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Specialty" EntityType="Self.Specialty" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lecturer" EntityType="Self.Lecturer" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Lecturer].[TabNumber] AS [TabNumber], 
+    [Lecturer].[Title] AS [Title], 
+    [Lecturer].[Degree] AS [Degree]
+    FROM [dbo].[Lecturer] AS [Lecturer]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="Licei" EntityType="Self.Licei" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [Licei].[Id] AS [Id], 
@@ -353,8 +361,8 @@
             <End Role="Discipline" EntitySet="Discipline" />
             <End Role="Exam" EntitySet="Exam" />
           </AssociationSet>
-          <AssociationSet Name="FK_Exam_Lecturer" Association="Self.FK_Exam_Lecturer">
-            <End Role="Lecturer" EntitySet="Lecturer" />
+          <AssociationSet Name="FK_Exam_Employee" Association="Self.FK_Exam_Employee">
+            <End Role="Employee" EntitySet="Employee" />
             <End Role="Exam" EntitySet="Exam" />
           </AssociationSet>
           <AssociationSet Name="FK_Exam_Student" Association="Self.FK_Exam_Student">
@@ -577,6 +585,10 @@
             <End Role="Exam" EntitySet="Exam" />
           </AssociationSet>
           <EntitySet Name="Employee" EntityType="uchebModel.Employee" />
+          <AssociationSet Name="FK_Exam_Employee" Association="uchebModel.FK_Exam_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Exam" EntitySet="Exam" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -613,6 +625,7 @@
           <NavigationProperty Name="Discipline" Relationship="uchebModel.FK_Exam_Discipline" FromRole="Exam" ToRole="Discipline" />
           <NavigationProperty Name="Student" Relationship="uchebModel.FK_Exam_Student" FromRole="Exam" ToRole="Student" />
           <NavigationProperty Name="Lecturer" Relationship="uchebModel.FK_Exam_Lecturer" FromRole="Exam" ToRole="Lecturer" />
+          <NavigationProperty Name="Employee" Relationship="uchebModel.FK_Exam_Employee" FromRole="Exam" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Student">
           <Key>
@@ -700,7 +713,20 @@
           <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Salary" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Boss" Type="Int32" />
+          <NavigationProperty Name="Exam" Relationship="uchebModel.FK_Exam_Employee" FromRole="Employee" ToRole="Exam" />
         </EntityType>
+        <Association Name="FK_Exam_Employee">
+          <End Type="uchebModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="uchebModel.Exam" Role="Exam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="TabNumber" />
+            </Principal>
+            <Dependent Role="Exam">
+              <PropertyRef Name="TabNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

@@ -29,22 +29,30 @@ namespace AhitSchool.pages
             employee = _employee; this.DataContext = employee;
             int OriginalID = employee.TabNumber; IdTb.MaxLength = 3;
             if (employee != null && employee.TabNumber > 0) IdTb.IsReadOnly = true;
-            LecternCbx.ItemsSource = App.Entities.Lecturer.ToList();
-            LecternCbx.DisplayMemberPath = "Name_Lectern";
+            PositionCbx.ItemsSource = App.Entities.Employee.ToList();
+            PositionCbx.DisplayMemberPath = "Position";
+            LecternCbx.ItemsSource = App.Entities.Discipline.ToList();
+            LecternCbx.DisplayMemberPath = "Executor";
             ChiefCbx.ItemsSource = App.Entities.Employee.ToList().Where(x => x.TabNumber == x.Boss);
-            ChiefCbx.DisplayMemberPath = "Surname";
+            ChiefCbx.DisplayMemberPath = "LastName";
             if (employee.TabNumber > 0)
             {
-                var bbb = App.Entities.Lecturer.ToList().Where(x => x.TabNumber == employee.TabNumber).First();
-                LecternCbx.SelectedIndex = LecternCbx.Items.IndexOf(bbb); var ccc = App.Entities.Employee.ToList().Where(x => x.Boss == employee.Boss).First();
+                var bbb = App.Entities.Discipline.ToList().Where(x => x.Executor == employee.Code).First();
+                LecternCbx.SelectedIndex = LecternCbx.Items.IndexOf(bbb); 
+                var ccc = App.Entities.Employee.ToList().Where(x => x.Boss == employee.Boss).First();
                 ChiefCbx.SelectedIndex = ChiefCbx.Items.IndexOf(ccc);
+
+                var bbbb = App.Entities.Employee.ToList().Where(x => x.Position == employee.Position).First();
+                PositionCbx.SelectedIndex = PositionCbx.Items.IndexOf(bbbb);
             }
         }
 
         private void SaveButt_Click(object sender, RoutedEventArgs e)
         {
-            bool errors = false; var selectLectern = LecternCbx.SelectedItem as Lecturer;
+            bool errors = false; 
+            var selectLectern = LecternCbx.SelectedItem as Discipline;
             var selectChief = ChiefCbx.SelectedItem as Employee;
+            var selectPos = PositionCbx.SelectedItem as Employee;
             if (IdTb.Text.Length < 3)
             {
                 errors = true;
@@ -62,12 +70,14 @@ namespace AhitSchool.pages
                     App.Entities.Employee.Add(new Employee()
                     {
                         TabNumber = employee.TabNumber,
+                        Position = selectPos.Position,
+                        Code = selectLectern.Executor,
                         LastName = FioTb.Text,
                         Salary = SalaryTb.Text,
                         Boss = selectChief.TabNumber,
                     });
                 }
-                employee.TabNumber = selectLectern.TabNumber;
+                employee.Code = selectLectern.Executor;
                 employee.Boss = selectChief.TabNumber;
                 MessageBox.Show("Сохранено!");
                 App.Entities.SaveChanges();

@@ -25,5 +25,6 @@ namespace AhitSchool.components
         public virtual Discipline Discipline { get; set; }
         public virtual Student Student { get; set; }
         public virtual Lecturer Lecturer { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

@@ -31,12 +31,17 @@ namespace AhitSchool.pages
             WhatToDo = _WhatToDo;
             this.DataContext = subject;
             IdTb.MaxLength = 3;
+            LecCbx.ItemsSource = App.Entities.Specialty.ToList();
+            LecCbx.DisplayMemberPath = "Code";
             if (subject != null && subject.Code > 0) IdTb.IsReadOnly = true;
+            var caf = App.Entities.Specialty.ToList().Where(x => x.Code == subject.Executor).First();
+            LecCbx.SelectedIndex = LecCbx.Items.IndexOf(caf);
         }
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
             bool errors = false;
+            var selectLec = LecCbx.SelectedItem as Specialty;
             if (IdTb.Text.Length < 3)
             {
                 errors = true;
@@ -57,8 +62,11 @@ namespace AhitSchool.pages
                         Code = subject.Code,
                         Volume = subject.Volume,
                         Name = subject.Name,
+                        Executor = selectLec.Code,
                     });
                 }
+                else
+                    subject.Executor = selectLec.Code;
                 MessageBox.Show("Сохранено!");
                 App.Entities.SaveChanges();
                 NavigationService.Navigate(new SubjListPage());

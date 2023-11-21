@@ -14,11 +14,20 @@ namespace AhitSchool.components
     
     public partial class Employee
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Employee()
+        {
+            this.Exam = new HashSet<Exam>();
+        }
+    
         public int TabNumber { get; set; }
         public string Code { get; set; }
         public string LastName { get; set; }
         public string Position { get; set; }
         public string Salary { get; set; }
         public Nullable<int> Boss { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Exam> Exam { get; set; }
     }
 }

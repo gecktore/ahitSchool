@@ -47,7 +47,7 @@
                         <GridViewColumn Width="100" Header="Дата" DisplayMemberBinding="{Binding Date, StringFormat=dd.MM.yyyy}"></GridViewColumn>
                         <GridViewColumn Width="150" Header="Дисциплина" DisplayMemberBinding="{Binding Discipline.Name}"></GridViewColumn>
                         <GridViewColumn Width="150" Header="Студент" DisplayMemberBinding="{Binding Student.LastName}"></GridViewColumn>
-                        <GridViewColumn Width="150" Header="Преподаватель" DisplayMemberBinding="{Binding Lecturer.Title}"></GridViewColumn>
+                        <GridViewColumn Width="150" Header="Преподаватель" x:Name="D" DisplayMemberBinding="{Binding Employee.LastName}"></GridViewColumn>
                         <GridViewColumn Width="100" Header="Аудитория" DisplayMemberBinding="{Binding Auditorium}"></GridViewColumn>
                         <GridViewColumn Width="100" Header="Оценка" DisplayMemberBinding="{Binding Grade}"></GridViewColumn>
                     </GridView.Columns>

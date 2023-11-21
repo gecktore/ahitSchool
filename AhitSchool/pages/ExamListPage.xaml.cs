@@ -24,6 +24,7 @@ namespace AhitSchool.pages
         public ExamListPage()
         {
             InitializeComponent();
+            
             Refresh();
         }
         public void Refresh()
