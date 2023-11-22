@@ -33,7 +33,7 @@ namespace AhitSchool.pages
             MarkTb.MaxLength = 1;
 
             SubjectCb.ItemsSource = App.Entities.Discipline.ToList();
-            SubjectCb.DisplayMemberPath = "Executor";
+            SubjectCb.DisplayMemberPath = "Name";
 
             StudentCb.ItemsSource = App.Entities.Student.ToList();
             StudentCb.DisplayMemberPath = "LastName";

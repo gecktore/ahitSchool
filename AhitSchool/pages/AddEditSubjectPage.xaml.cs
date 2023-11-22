@@ -31,17 +31,20 @@ namespace AhitSchool.pages
             WhatToDo = _WhatToDo;
             this.DataContext = subject;
             IdTb.MaxLength = 3;
-            LecCbx.ItemsSource = App.Entities.Specialty.ToList();
-            LecCbx.DisplayMemberPath = "Code";
+            LecCbx.ItemsSource = App.Entities.Discipline.ToList();
+            LecCbx.DisplayMemberPath = "Executor";
             if (subject != null && subject.Code > 0) IdTb.IsReadOnly = true;
-            var caf = App.Entities.Specialty.ToList().Where(x => x.Code == subject.Executor).First();
-            LecCbx.SelectedIndex = LecCbx.Items.IndexOf(caf);
+            if(subject.Code > 0)
+            {
+                var caf = App.Entities.Discipline.ToList().Where(x => x.Executor == subject.Executor).First();
+                LecCbx.SelectedIndex = LecCbx.Items.IndexOf(caf);
+            }       
         }
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
             bool errors = false;
-            var selectLec = LecCbx.SelectedItem as Specialty;
+            var selectLec = LecCbx.SelectedItem as Discipline;
             if (IdTb.Text.Length < 3)
             {
                 errors = true;
@@ -62,11 +65,11 @@ namespace AhitSchool.pages
                         Code = subject.Code,
                         Volume = subject.Volume,
                         Name = subject.Name,
-                        Executor = selectLec.Code,
+                        Executor = selectLec.Executor,
                     });
                 }
                 else
-                    subject.Executor = selectLec.Code;
+                    subject.Executor = selectLec.Executor;
                 MessageBox.Show("Сохранено!");
                 App.Entities.SaveChanges();
                 NavigationService.Navigate(new SubjListPage());
